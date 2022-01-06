@@ -9,6 +9,21 @@ on:
       - 'docs/**'
 
 jobs:
+  lint:
+    name: 'lint (node: ${{ matrix.node }})'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [12, 14]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node }}
+      - uses: ./.github/actions/install-modules
+      - name: Run lint
+        run: yarn run -s lint
+
   unit_back:
     name: 'unit_back (node: ${{ matrix.node }})'
     needs: [lint]
@@ -27,7 +42,7 @@ jobs:
         with:
           globalPackages: codecov
       - name: Run tests
-        run: node --version & yarn run -s test:unit --coverage && codecov -C -F unit
+        run: node --version yarn run -s test:unit --coverage && codecov -C -F unit
 
   unit_front:
     name: 'unit_front (node: ${{ matrix.node }})'
