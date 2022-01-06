@@ -41,8 +41,9 @@ jobs:
       - uses: ./.github/actions/install-modules
         with:
           globalPackages: codecov
-      - name: Run tests
-        run: node --version yarn run -s test:unit --coverage && codecov -C -F unit
+      - uses: ./.github/actions/run-unit-back-tests
+      # - name: Run tests
+      #   run: node --version && yarn run -s test:unit --coverage && codecov -C -F unit
 
   unit_front:
     name: 'unit_front (node: ${{ matrix.node }})'

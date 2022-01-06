@@ -1,0 +1,7 @@
+name: 'Run unit back tests'
+description: 'Run unit back tests'
+runs:
+  using: 'composite'
+  steps:
+    - run: $GITHUB_ACTION_PATH/script.sh
+      shell: bash
